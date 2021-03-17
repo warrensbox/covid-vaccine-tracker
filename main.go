@@ -48,8 +48,8 @@ func getVaccine() (string, error) {
 	client := http.Client{
 		Timeout: timeout,
 	}
-
-	request, err := http.NewRequest("GET", "https://www.vaccinespotter.org/api/v0/states/IA.json", nil)
+	endpoint := fmt.Sprintf("https://www.vaccinespotter.org/api/v0/states/%s.json", STATE)
+	request, err := http.NewRequest("GET", endpoint, nil)
 	request.Header.Set("Content-type", "application/json")
 
 	if err != nil {
