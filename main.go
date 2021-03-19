@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -24,6 +25,11 @@ var (
 	TopicArn   string = "arn:aws:sns:us-east-1:12334567:Covid-vaccine" //change default
 	AWS_region string = "us-east-1"
 	State      string = "IA"
+	Table      string = "xyz"
+	ID         string = "1234"
+	Source     string = "source-state"
+	RangeA     string = "00000"
+	RangeB     string = "99000"
 )
 
 var fnvHash hash.Hash32 = fnv.New32a()
@@ -42,7 +48,11 @@ func HandleRequest(ctx context.Context) (string, error) {
 func getVaccine() (string, error) {
 
 	STATE := getEnvState()
-	fmt.Printf("STATE: %v\n", getEnvState())
+	RANGE_A := getEnvZipRangeA()
+	RANGE_B := getEnvZipRangeB()
+	fmt.Printf("STATE: %v\n", STATE)
+	fmt.Printf("RANGE_A: %v\n", RANGE_A)
+	fmt.Printf("RANGE_B: %v\n", RANGE_B)
 
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
@@ -101,7 +111,7 @@ func getVaccine() (string, error) {
 		// fmt.Printf("AppointmentsLastFetched: %s\n", val.Properties.AppointmentsLastFetched)
 		// fmt.Println("=============")
 
-		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE || len(val.Properties.Appointments) > 0 {
+		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE && (convertToInt(val.Properties.PostalCode) >= convertToInt(RANGE_A) && convertToInt(val.Properties.PostalCode) <= convertToInt(RANGE_B)) {
 			available = append(available, val)
 		}
 	}
@@ -139,7 +149,7 @@ func composeMessage(available properties) string {
 	//compose message
 	var resultStr strings.Builder
 	resultStr.WriteString("Vaccination available at:\n")
-	resultStr.WriteString("Local pharmacies + Hyvee\n")
+	resultStr.WriteString("Local pharmacies\n")
 	for _, val := range available {
 		location := fmt.Sprintf("Location: %s\n", val.Properties.Name)
 		resultStr.WriteString(location)
@@ -173,7 +183,7 @@ func sendMessage(message string) (string, error) {
 		Message:  aws.String(message),
 		TopicArn: aws.String(getEnvTopic()),
 	}
-
+	//return "output", nil
 	result, err := client.Publish(input)
 	if err != nil {
 		fmt.Println("Publish error:", err)
@@ -199,9 +209,9 @@ func updateDatabase(hash string) bool {
 	svc := dynamodb.New(sess)
 
 	// Update item in table Covid
-	tableName := "Covid"
-	source := "covid-all-location"
-	id := "2019"
+	tableName := getEnvTable()
+	source := getEnvSource()
+	id := getEnvTableID()
 
 	result, err := svc.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(tableName),
@@ -293,6 +303,54 @@ func getEnvTopic() string {
 		return TopicArn
 	}
 	return v
+}
+
+func getEnvTable() string {
+	v := os.Getenv("TABLE_NAME")
+	if v == "" {
+		return Table
+	}
+	return v
+}
+
+func getEnvTableID() string {
+	v := os.Getenv("TABLE_ID")
+	if v == "" {
+		return ID
+	}
+	return v
+}
+
+func getEnvSource() string {
+	v := os.Getenv("SOURCE")
+	if v == "" {
+		return Source
+	}
+	return v
+}
+
+func getEnvZipRangeA() string {
+	v := os.Getenv("RANGE_A")
+	if v == "" {
+		return RangeA
+	}
+	return v
+}
+
+func getEnvZipRangeB() string {
+	v := os.Getenv("RANGE_B")
+	if v == "" {
+		return RangeB
+	}
+	return v
+}
+
+func convertToInt(str string) int {
+	i, err := strconv.Atoi(str)
+	if err != nil {
+		return 0
+	}
+	return i
 }
 
 type Covid struct {

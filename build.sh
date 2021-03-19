@@ -1,18 +1,21 @@
 #!/bin/sh
 
-echo "hello"
+if [ -z "$1" ]
+  then
+    echo "No argument supplied"
+fi
+
+STATE=$1
 
 #*****************************************************************
 #************************ Building binary ******************
 #*****************************************************************
-
+echo "Attempting to build..."
 go version
-# echo $GOCACHE
-# export GOCACHE=cache
-env GOOS=linux go build -ldflags="-s -w" -o bin/covid-vaccine-iowa main.go
+env GOOS=linux go build -ldflags="-s -w" -o bin/covid-vaccine-$STATE main.go
 
-zip covid-vaccine-iowa.zip bin/covid-vaccine-iowa
+zip covid-vaccine-$STATE.zip bin/covid-vaccine-$STATE
 
 aws lambda update-function-code \
-    --function-name  covid-vaccine-iowa \
-    --zip-file fileb://./covid-vaccine-iowa.zip
+    --function-name  covid-vaccine-$STATE \
+    --zip-file fileb://./covid-vaccine-$STATE.zip
