@@ -22,14 +22,15 @@ import (
 )
 
 var (
-	TopicArn   string = "arn:aws:sns:us-east-1:12334567:Covid-vaccine" //change default
-	AWS_region string = "us-east-1"
-	State      string = "IA"
-	Table      string = "xyz"
-	ID         string = "1234"
-	Source     string = "source-state"
-	RangeA     string = "00000"
-	RangeB     string = "99000"
+	TopicArn     string = "arn:aws:sns:us-east-1:12334567:Covid-vaccine" //change default
+	AWS_region   string = "us-east-1"
+	State        string = "IA"
+	Table        string = "xyz"
+	ID           string = "1234"
+	Source       string = "source-state"
+	RangeA       string = "00000"
+	RangeB       string = "99000"
+	MuteProvider string = "unknown"
 )
 
 var fnvHash hash.Hash32 = fnv.New32a()
@@ -50,9 +51,12 @@ func getVaccine() (string, error) {
 	STATE := getEnvState()
 	RANGE_A := getEnvZipRangeA()
 	RANGE_B := getEnvZipRangeB()
+	MUTE := getEnvMuteProvider()
 	fmt.Printf("STATE: %v\n", STATE)
 	fmt.Printf("RANGE_A: %v\n", RANGE_A)
 	fmt.Printf("RANGE_B: %v\n", RANGE_B)
+	fmt.Printf("RANGE_B: %v\n", RANGE_B)
+	fmt.Printf("MUTE: %v\n", MUTE)
 
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
@@ -111,7 +115,7 @@ func getVaccine() (string, error) {
 		// fmt.Printf("AppointmentsLastFetched: %s\n", val.Properties.AppointmentsLastFetched)
 		// fmt.Println("=============")
 
-		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE && (convertToInt(val.Properties.PostalCode) >= convertToInt(RANGE_A) && convertToInt(val.Properties.PostalCode) <= convertToInt(RANGE_B)) {
+		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE && (convertToInt(val.Properties.PostalCode) >= convertToInt(RANGE_A) && convertToInt(val.Properties.PostalCode) <= convertToInt(RANGE_B)) && val.Properties.ProviderBrand != MUTE {
 			available = append(available, val)
 		}
 	}
@@ -341,6 +345,14 @@ func getEnvZipRangeB() string {
 	v := os.Getenv("RANGE_B")
 	if v == "" {
 		return RangeB
+	}
+	return v
+}
+
+func getEnvMuteProvider() string {
+	v := os.Getenv("MUTE")
+	if v == "" {
+		return MuteProvider
 	}
 	return v
 }
