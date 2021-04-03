@@ -55,8 +55,15 @@ func getVaccine() (string, error) {
 	fmt.Printf("STATE: %v\n", STATE)
 	fmt.Printf("RANGE_A: %v\n", RANGE_A)
 	fmt.Printf("RANGE_B: %v\n", RANGE_B)
-	fmt.Printf("RANGE_B: %v\n", RANGE_B)
-	fmt.Printf("MUTE: %v\n", MUTE)
+
+	//get slice of muted provider
+	mutedList := strings.Split(MUTE, ",")
+	fmt.Printf("MUTE: %v\n", mutedList)
+	//put muted list in hash
+	mutedHash := make(map[string]bool)
+	for _, val := range mutedList {
+		mutedHash[val] = true
+	}
 
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
@@ -114,8 +121,9 @@ func getVaccine() (string, error) {
 		// fmt.Printf("AppointmentsAvailable: %t\n", val.Properties.AppointmentsAvailable)
 		// fmt.Printf("AppointmentsLastFetched: %s\n", val.Properties.AppointmentsLastFetched)
 		// fmt.Println("=============")
+		mutedProvider, _ := mutedHash[val.Properties.ProviderBrand]
 
-		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE && (convertToInt(val.Properties.PostalCode) >= convertToInt(RANGE_A) && convertToInt(val.Properties.PostalCode) <= convertToInt(RANGE_B)) && val.Properties.ProviderBrand != MUTE {
+		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE && (convertToInt(val.Properties.PostalCode) >= convertToInt(RANGE_A) && convertToInt(val.Properties.PostalCode) <= convertToInt(RANGE_B)) && !mutedProvider {
 			available = append(available, val)
 		}
 	}
