@@ -20,7 +20,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 
 
 
-### Step by step instruction to install notifier on your AWS account
+### Follow step-by-step instructions to install notifier on your AWS account
 #### 1. Create IAM Policy 
 - Navigate to the IAM Page on AWS console   
 - Create new policy `covid-vaccine-all-lambda`  
@@ -74,7 +74,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - Navigate to the DynamoDb Page on AWS console
 - Table name: `Covid`
 - Primary key* : Partition key: `Source` Type: `string`
-#### 4. Create Lambda Function
+#### 5. Create Lambda Function
 - Navigate to the Lambda Page on AWS console
 - Create new lambda function
 - Function name: `covid-vaccine-notifier`
@@ -98,8 +98,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - See example:   
 <img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-notifier-env-vars.png" alt="drawing" style="width: 370px;"/>
 
-
-#### 3. Create CloudWatch Rule
+#### 6. Create CloudWatch Rule
 - Navigate to the CloudWatch Page on AWS console
 - Navigate to Events-> Rules
 - Create Rule
@@ -107,7 +106,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - Enter the rate you want the API to be checked. Ideally it would be 5 minutes.
 - Target: Choose `Lambda function` 
 - Function: `covid-vaccine-notifier`
-#### 3. Create Subscription
+#### 7. Create Subscription
 - Navigate to the SNS Page on AWS console
 - On side bar, select `Subscription`
 - Next, `Crate subscription`
