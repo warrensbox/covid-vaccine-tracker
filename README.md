@@ -10,7 +10,7 @@ A lightweight application that send you a notification when a vaccine becomes av
 Install the binary as a AWS lambda function or simply on it on your machine.
 
 ### Workflow
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-tracker-workflow.svg" alt="drawing" style="width: 370px;"/>
+<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-tracker-workflow-white-bg.svg" alt="drawing" style="width: 370px;"/>
 
 1. CloudWatch Rules will trigger lambda.
 1. The lambda function(Notifier app) will call the following API: `https://www.vaccinespotter.org/api/v0/states/<STATE>.json`
@@ -21,7 +21,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 
 
 ### Step by step instruction to install notifier on your AWS account
-
+#### Create Lambda Function
 
 
 
