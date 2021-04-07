@@ -95,7 +95,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - TABLE_NAME: Covid (you don't have to change this)	 
 - TOPIC_ARN:  (paste the topic ARN from the previous step)	
 - See example:   
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-notifier-env-vars.png" alt="drawing" width="270"/>
+<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-notifier-env-vars.png" alt="drawing" width="470"/>
 
 #### 6. Create CloudWatch Rule
 - Navigate to the CloudWatch Page on AWS console
@@ -114,8 +114,8 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - Both Slack and Teams channel should have an option to send emails to that channel.
 
 ### How to get email for Slack
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/slack-email.png" alt="drawing" width="250"/>
+<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/slack-email.png" alt="drawing" width="350"/>
 
 ### How to get email for Team
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/teams-email.png" alt="drawing" width="250"/>
+<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/teams-email.png" alt="drawing" width="350"/>
 
