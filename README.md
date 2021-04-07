@@ -119,3 +119,5 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 ### How to get email for Team
 <img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/teams-email.png" alt="drawing" width="350"/>
 
+### Issues
+https://github.com/warrensbox/covid-vaccine-tracker/issues
