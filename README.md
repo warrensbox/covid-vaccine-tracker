@@ -114,8 +114,8 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - Both Slack and Teams channel should have an option to send emails to that channel.
 
 ### How to get email for Slack
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/slack-email.png" alt="drawing" style="width: 370px;"/>
+<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/slack-email.png" alt="drawing" style="width: 150px;"/>
 
 ### How to get email for Team
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/teams-email.png" alt="drawing" style="width: 370px;"/>
+<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/teams-email.png" alt="drawing" style="width: 150px;"/>
 
