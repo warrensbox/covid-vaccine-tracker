@@ -103,24 +103,6 @@ func getVaccine() (string, error) {
 	var available properties
 
 	for _, val := range res.Features {
-
-		// fmt.Printf("ID: %v\n", val.Properties.ID)
-		// fmt.Printf("URL: %s\n", val.Properties.URL)
-		// fmt.Printf("City: %s\n", val.Properties.City)
-		// fmt.Printf("Name: %s\n", val.Properties.Name)
-		// fmt.Printf("State: %s\n", val.Properties.State)
-		// fmt.Printf("Address: %s\n", val.Properties.Address)
-		// fmt.Printf("Provider: %s\n", val.Properties.Provider)
-		// fmt.Printf("TimeZone: %s\n", val.Properties.TimeZone)
-		// fmt.Printf("PostalCode: %s\n", val.Properties.PostalCode)
-		//fmt.Printf("Appointments: %s\n", val.Properties.Appointments)
-		// fmt.Printf("ProviderBrand: %s\n", val.Properties.ProviderBrand)
-		// fmt.Printf("CarriesVaccine: %t\n", val.Properties.CarriesVaccine)
-		// fmt.Printf("Location: %s\n", val.Properties.ProviderBrandName)
-		// fmt.Printf("ProviderBrandName: %s\n", val.Properties.ProviderLocationID)
-		// fmt.Printf("AppointmentsAvailable: %t\n", val.Properties.AppointmentsAvailable)
-		// fmt.Printf("AppointmentsLastFetched: %s\n", val.Properties.AppointmentsLastFetched)
-		// fmt.Println("=============")
 		mutedProvider, _ := mutedHash[val.Properties.ProviderBrand]
 
 		if val.Properties.AppointmentsAvailable && val.Properties.State == STATE && (convertToInt(val.Properties.PostalCode) >= convertToInt(RANGE_A) && convertToInt(val.Properties.PostalCode) <= convertToInt(RANGE_B)) && !mutedProvider {
@@ -129,21 +111,7 @@ func getVaccine() (string, error) {
 	}
 
 	if len(available) > 0 {
-		// for _, val := range available {
-		// 	fmt.Printf("Address: %s\n", val.Properties.Address)
-		// 	fmt.Printf("Provider: %s\n", val.Properties.Provider)
-		// 	fmt.Printf("TimeZone: %s\n", val.Properties.TimeZone)
-		// 	fmt.Printf("PostalCode: %s\n", val.Properties.PostalCode)
-		// 	fmt.Printf("Appointments: %s\n", val.Properties.Appointments)
-		// 	fmt.Printf("ProviderBrand: %s\n", val.Properties.ProviderBrand)
-		// 	fmt.Printf("CarriesVaccine: %t\n", val.Properties.CarriesVaccine)
-		// 	fmt.Printf("Location: %s\n", val.Properties.ProviderBrandName)
-		// 	fmt.Printf("ProviderBrandName: %s\n", val.Properties.ProviderLocationID)
-		// 	fmt.Printf("AppointmentsAvailable: %t\n", val.Properties.AppointmentsAvailable)
-		// 	fmt.Printf("AppointmentsLastFetched: %s\n", val.Properties.AppointmentsLastFetched)
-		// 	fmt.Println()
-		// 	fmt.Println("=============")
-		// }
+
 		message := composeMessage(available)
 		fmt.Println(message)
 		hash := getHash(message)
