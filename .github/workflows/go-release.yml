@@ -26,11 +26,10 @@ jobs:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
           release_name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
-      - name: Create a go bin
-        uses: actions/setup-go@v1
+      - uses: actions/setup-go@v1
         with:
           go-version: '1.16' # The Go version to download (if necessary) and use.
-        run: go version
+      - run: go version
 
   # release-binaries:
   #     name: release linux/amd64
