@@ -21,10 +21,7 @@ jobs:
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-
-      - name: Set APP_VERSION env
-        run: echo ::set-env name=APP_VERSION::$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev )
-
+        
       - uses: actions/checkout@v2
       - uses: wangyoucao577/go-release-action@v1.16
         with:
@@ -32,4 +29,4 @@ jobs:
           goos: linux
           goarch: amd64
           build_flags: -v
-          ldflags: -X "cmd.appVersion=${{ env.APP_VERSION }}"
+          ldflags: -X "cmd.appVersion=${{ steps.get_version.outputs.VERSION }}"
