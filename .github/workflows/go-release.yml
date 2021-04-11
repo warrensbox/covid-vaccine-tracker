@@ -27,6 +27,7 @@ jobs:
           echo $RELEASE_VERSION
 
   create-release:
+    needs: [create-tag]
     name: Create Release
     runs-on: ubuntu-latest
     steps:
