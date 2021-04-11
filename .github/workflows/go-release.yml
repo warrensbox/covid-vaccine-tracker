@@ -31,6 +31,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+        - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
         
       - name: Get the version
         id: get_version
@@ -58,29 +68,29 @@ jobs:
           draft: false
           prerelease: false
 
-  release-binaries:
-      name: release linux/amd64
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          goos: [linux, darwin]
-          goarch: ["386", amd64]
-          exclude:
-            - goarch: "386"
-              goos: darwin
-      steps:        
-      - uses: actions/checkout@v2
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
-      - uses: wangyoucao577/go-release-action@v1.16
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: ${{ matrix.goos }}
-          goarch: ${{ matrix.goarch }}
-          build_flags: -v
-          ldflags: -X "cmd.appVersion=${{ steps.get_version.outputs.VERSION }}"
-          asset_name: covid-vaccine-tracker_${{ steps.get_version.outputs.VERSION }}_${{ matrix.goos }}_${{ matrix.goarch }}
+  # release-binaries:
+  #     name: release linux/amd64
+  #     runs-on: ubuntu-latest
+  #     strategy:
+  #       matrix:
+  #         goos: [linux, darwin]
+  #         goarch: ["386", amd64]
+  #         exclude:
+  #           - goarch: "386"
+  #             goos: darwin
+  #     steps:        
+  #     - uses: actions/checkout@v2
+  #     - name: Get the version
+  #       id: get_version
+  #       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+  #     - uses: wangyoucao577/go-release-action@v1.16
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         goos: ${{ matrix.goos }}
+  #         goarch: ${{ matrix.goarch }}
+  #         build_flags: -v
+  #         ldflags: -X "cmd.appVersion=${{ steps.get_version.outputs.VERSION }}"
+  #         asset_name: covid-vaccine-tracker_${{ steps.get_version.outputs.VERSION }}_${{ matrix.goos }}_${{ matrix.goarch }}
       # - name: Update release with zip
       #   uses: johnwbyrd/update-release@v1
       #   with:
