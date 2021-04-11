@@ -8,7 +8,7 @@ on:
 
 jobs:
   create-release:
-    needs: [create-tag]
+    #needs: [create-tag]
     name: Create Release
     runs-on: ubuntu-latest
     steps:
