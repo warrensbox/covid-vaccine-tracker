@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  create-release:
+  create-tag:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -20,6 +20,13 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
