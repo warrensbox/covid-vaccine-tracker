@@ -32,6 +32,12 @@ jobs:
       - run: |
           go version
           env GOOS=linux go build -ldflags="-s -w" -o bin/covid-vaccine-notifier main.go
+          zip covid-vaccine-notifier.zip bin/covid-vaccine-notifier
+     - name: Update release with zip
+        uses: johnwbyrd/update-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          asset: ./covid-vaccine-notifier.zip
 
   # release-binaries:
   #     name: release linux/amd64
