@@ -80,8 +80,7 @@ Install the binary as a AWS lambda function or simply run it on your machine.
 - Runtime: `Go 1.x`
 - Change default execution role: `Use an existing role`
 - Existing role: `covid-vaccine-all-role`
-- Code source: Download zip from: [covid-vaccine-notifier-lambda.zip](https://github.com/warrensbox/covid-vaccine-tracker/releases/download/v0.0.25/covid-vaccine-notifier.zip) file
-- Or download latest `covid-vaccine-notifier-lambda.zip` from [Release](https://github.com/warrensbox/covid-vaccine-tracker/releases)
+- Code source: Download zip latest `covid-vaccine-notifier-lambda.zip` from [Release](https://github.com/warrensbox/covid-vaccine-tracker/releases)
 - Upload the zip file from previous step
 - Navigate to the `Configuration` tab
 - Navigate to `Environment variables`
