@@ -39,25 +39,28 @@ jobs:
           draft: false
           prerelease: false
 
-  release-linux-amd64:
+  release-binaries:
       name: release linux/amd64
       runs-on: ubuntu-latest
-      steps:
-      # - name: Bump version and push tag
-      #   id: tag_version
-      #   uses: mathieudutour/github-tag-action@v5.4
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Get the version
-      #   id: get_version
-      #   run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-        
+      strategy:
+        matrix:
+          goos: [linux, darwin]
+          goarch: ["386", amd64]
+          exclude:
+            - goarch: "386"
+              goos: darwin
+      steps:        
       - uses: actions/checkout@v2
       - uses: wangyoucao577/go-release-action@v1.16
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          goos: linux
-          goarch: amd64
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
           build_flags: -v
           ldflags: -X "cmd.appVersion=${{ steps.get_version.outputs.VERSION }}"
+          asset_name: covid-vaccine-tracker_${{ steps.get_version.outputs.VERSION }}_${{ matrix.goos }}_${{ matrix.goarch }}
+      # - name: Update release with zip
+      #   uses: johnwbyrd/update-release@v1
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     asset: ./the-file-you-want-to-release.zip
