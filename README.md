@@ -1,13 +1,13 @@
 # Covid Vaccination Notifier
 
-A lightweight application that send you a notification when a vaccine becomes available near you. Get notified on: 
+A lightweight application that send you a notification when a vaccine appointment becomes available near you. Get notified on: 
 - Slack
 - Teams
 - Email
 - SMS
 
 ### Installation 
-Install the binary as a AWS lambda function or simply on it on your machine.
+Install the binary as a AWS lambda function or simply run it on your machine.
 
 ### Workflow
 <img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-tracker-workflow-white-bg.svg" alt="drawing" style="width: 370px;"/>
@@ -94,6 +94,7 @@ Install the binary as a AWS lambda function or simply on it on your machine.
 - TABLE_ID: 2019 (you don't have to change this)	
 - TABLE_NAME: Covid (you don't have to change this)	 
 - TOPIC_ARN:  (paste the topic ARN from the previous step)	
+- AWS_REGION: Default is us-east-1   
 - See example:   
 <img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/covid-vaccine-tracker/covid-vaccine-notifier-env-vars.png" alt="drawing" width="470"/>
 
