@@ -22,6 +22,9 @@ jobs:
       - name: Check output
         env:
           RELEASE_VERSION: ${{ steps.tag_version.outputs.VERSION }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
 
   create-release:
     name: Create Release
@@ -37,6 +40,9 @@ jobs:
       - name: Check output
         env:
           RELEASE_VERSION: ${{ steps.tag_version.outputs.VERSION }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
 
       - name: Create Release
         id: create_release
