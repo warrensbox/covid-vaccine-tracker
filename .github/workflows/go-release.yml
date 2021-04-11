@@ -8,7 +8,7 @@ on:
 
 jobs:
   create-tag:
-    name: Create Release
+    name: Create tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -58,6 +58,9 @@ jobs:
               goos: darwin
       steps:        
       - uses: actions/checkout@v2
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - uses: wangyoucao577/go-release-action@v1.16
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
