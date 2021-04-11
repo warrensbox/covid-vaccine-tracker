@@ -1,7 +1,7 @@
 [![Go](https://github.com/warrensbox/covid-vaccine-tracker/actions/workflows/go-release.yml/badge.svg?branch=master)](https://github.com/warrensbox/covid-vaccine-tracker/actions/workflows/go-release.yml)
 # Covid Vaccination Notifier
 
-A lightweight application that send you a notification when a vaccine appointment becomes available near you. Get notified on: 
+A lightweight application (lambda function) that notifies you when a vaccine appointment becomes available near you. Get notified on: 
 - Slack
 - Teams
 - Email
