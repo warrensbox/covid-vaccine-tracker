@@ -21,10 +21,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check output
         env:
-          RELEASE_VERSION: ${{ steps.tag_version.outputs.VERSION }}
+          RELEASE_VERSION: ${GITHUB_REF#refs/*/}
         run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
+          echo ${GITHUB_REF#refs/*/}
 
   create-release:
     name: Create Release
