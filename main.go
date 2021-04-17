@@ -124,7 +124,7 @@ func getVaccine() (string, error) {
 /* Compose message */
 func composeMessage(available properties) string {
 	var resultStr strings.Builder
-	resultStr.WriteString("Vaccination available at:\n")
+	resultStr.WriteString("Vaccination appointments available at:\n")
 	resultStr.WriteString("Local pharmacies\n")
 	for _, val := range available {
 		location := fmt.Sprintf("Location: %s\n", val.Properties.Name)
