@@ -161,7 +161,7 @@ func sendMessage(message string) (string, error) {
 	//return "output", nil //this is used for debugging - uncommenting this will prevent message from being sent
 	result, err := client.Publish(input)
 	if err != nil {
-		fmt.Println("Publish error:", err)
+		fmt.Println("Publish error message:", err)
 		return "ERROR publishing...", err
 	}
 
